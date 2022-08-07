@@ -13,19 +13,34 @@ class Score(models.Model):
         highest_score = None
 
         for score in all_scores:
-            time_args = score.time.split(":") # "00", "21", "18"
+            time_args = score.time.split(":")
             score_tup = [int(time_args[0]), int(time_args[1]), int(time_args[2])]
 
             if score_tup[0] < highest_score_tup[0]:
                 continue
 
+            if score_tup[0] > highest_score_tup[0]:
+                highest_score = score
+                highest_score_tup = score_tup
+                continue
+
+
+
             if score_tup[1] < highest_score_tup[1]:
                 continue
+
+            if score_tup[1] > highest_score_tup[1]:
+                highest_score = score
+                highest_score_tup = score_tup
+                continue
+
 
             if score_tup[2] < highest_score_tup[2]:
                 continue
 
-            highest_score = score
-            highest_score_tup = score_tup
+            if score_tup[2] > highest_score_tup[2]:
+                highest_score = score
+                highest_score_tup = score_tup
+                continue
 
         return highest_score
