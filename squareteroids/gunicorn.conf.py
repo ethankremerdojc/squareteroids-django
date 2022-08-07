@@ -1,5 +1,3 @@
-"""Gunicorn *development* config file"""
-
 # Django WSGI application path in pattern MODULE_NAME:VARIABLE_NAME
 wsgi_app = "squareteroids.wsgi:application"
 # The granularity of Error log outputs
