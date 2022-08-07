@@ -1,5 +1,5 @@
 *.pyc
 *.pyc
 squareteroids/game/__pycache__/
-squareteroids/static
 squareteroids/squareteroids/static/
+squareteroids/squareteroids/__pycache__/
