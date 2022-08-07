@@ -103,6 +103,8 @@ const sendPostData = (data) => {
 }
 
 const handleDeath = (game) => {
+
+    console.log("Player died...")
         
     var deathSound = new Audio("static/sounds/dead.mp3")
     deathSound.play();
