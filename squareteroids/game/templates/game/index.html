@@ -1,0 +1,30 @@
+<html>
+    <head>
+
+        <script>
+            var csrftoken = "{% csrf_token %}";
+        </script>
+
+        <link href="static/css/main.css" rel="stylesheet">
+        <script defer src="static/js/index.js" type="module"></script>
+        <title>Square-teroids</title>
+    </head>
+    <body>
+        <button id="startGame" style="visibility: hidden">Start Game</button>
+        <div id="stopwatch"></div>
+        <div id="stats">
+            <div id="highScore">
+                <span class="info">Highest Score:</span>
+                <span class="value">{{ highest_score.username }} : {{ highest_score.time }}</span>
+            </div>
+            <div id="enemySpeed">
+                <span class="info">Enemy Speed:</span>
+                <span class="value"></span>
+            </div>
+            <div id="spawnFactor">
+                <span class="info">Enemy Spawn Factor:</span>
+                <span class="value"></span>
+            </div>
+        </div>
+    </body>
+</html>
