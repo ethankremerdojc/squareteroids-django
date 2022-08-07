@@ -90,12 +90,14 @@ function runGame(pageDimensions) {
 }
 
 const sendPostData = (data) => {
-    fetch("/post", {
+    fetch("/post/", {
         method: "POST",
         headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrftoken}, 
         body: JSON.stringify(data)
     }).then(res => {
-    console.log("Request complete! response:", res);
+        console.log("Request complete! response:", res);
+    }).catch((error) => {
+        console.log("error: ", error)
     });
 }
 
