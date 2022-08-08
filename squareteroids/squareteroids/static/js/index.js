@@ -123,7 +123,6 @@ const timeStrToNum = (timeStr) => {
 }
 
 const handleDeath = (game) => {
-
     console.log("Player died...")
         
     var deathSound = new Audio("static/sounds/dead.mp3")
@@ -139,6 +138,8 @@ const handleDeath = (game) => {
 
     var highScoreBlock = document.getElementById('highScore');
     var valBlock = highScoreBlock.querySelector(".value");
+
+    var selectedDifficulty = document.getElementById("difficulty").value;
 
     if (timeStrToNum(game.timer.object.innerHTML) > timeStrToNum(valBlock.innerHTML)) {
         highestScores[selectedDifficulty].time = game.timer.object.innerHTML;
