@@ -1,17 +1,33 @@
 class Config {
     constructor(
-        tickSpeed, 
-        initialEnemySpawnFactor,
-        enemySpeed
+        difficulties, selectedDiffName
     ) {
-        this.tickSpeed = tickSpeed;
-        this.enemySpawnFactor = initialEnemySpawnFactor;
-        this.enemySpeed = enemySpeed;
+        this.tickSpeed = 20;
+        this.difficulty = this.getDifficulty(difficulties, selectedDiffName);
+
+        console.log(difficulties);
+        console.log(selectedDiffName)
+        console.log(this.difficulty)
+
+        this.enemySpawnFactor = this.difficulty.starting_enemy_spawn_factor;
+        this.enemySpeed = this.difficulty.starting_enemy_speed;
+        this.speedIncrementFactor = this.difficulty.enemy_speed_incremental_factor;
+        this.spawnIncrementFactor = this.difficulty.enemy_spawn_incremental_factor;
+    }
+
+    getDifficulty(difficulties, selectedDiffName) {
+        for (var diff of difficulties) {
+            if (diff.name === selectedDiffName) {
+                return diff
+            }
+        }
+
+        throw "No difficulty was found for the selection."
     }
 
     update() {
-        this.enemySpawnFactor = this.enemySpawnFactor * 1.0004;
-        this.enemySpeed = this.enemySpeed * 1.00001;
+        this.enemySpawnFactor = this.enemySpawnFactor * this.spawnIncrementFactor;
+        this.enemySpeed = this.enemySpeed * this.speedIncrementFactor;
     }
 }
 

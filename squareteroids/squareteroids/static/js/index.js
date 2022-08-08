@@ -47,13 +47,17 @@ const getNewEnemy = (speedFactor) => {
     return enemy
 }
 
+
+
 function runGame(pageDimensions) {
     // FIELD
     const game = new Game();
     game.obj = game.getDocObject();
     document.body.append(game.obj);
+
+    const selectedDifficulty = document.getElementById("difficulty").value;
     
-    const config = new Config(20, 0.06, 1);
+    const config = new Config(difficulties, selectedDifficulty);
     game.config = config;
     
     const timer = new Timer();
@@ -82,9 +86,18 @@ function runGame(pageDimensions) {
     game.timer.reset();
     game.timer.start();
     
-    var startButton = document.getElementById("startGame");
+    var startButton = document.getElementById("gameOptions");
     startButton.style.visibility = "hidden";
     
+    // score block
+    var highScoreBlock = document.getElementById('highScore');
+
+    var highScoreValueBlock = highScoreBlock.querySelector(".value");
+    highScoreValueBlock.innerHTML = highestScores[selectedDifficulty].time;
+
+    var highScoreUsernameBlock = highScoreBlock.querySelector(".username");
+    highScoreUsernameBlock.innerHTML = highestScores[selectedDifficulty].username;
+
     gameRunning = true;
     update(game)
 }
@@ -102,6 +115,13 @@ const sendPostData = (data) => {
     });
 }
 
+const timeStrToNum = (timeStr) => {
+    var numStr = timeStr.replaceAll(':', '');
+    var result = parseInt(numStr);
+    console.log(numStr, result)
+    return result
+}
+
 const handleDeath = (game) => {
 
     console.log("Player died...")
@@ -109,7 +129,20 @@ const handleDeath = (game) => {
     var deathSound = new Audio("static/sounds/dead.mp3")
     deathSound.play();
 
-    sendPostData({'username': username, 'time': game.timer.object.innerHTML})
+    sendPostData({
+        'username': username, 
+        'time': game.timer.object.innerHTML,
+        'enemy_speed': game.config.enemySpeed,
+        'enemy_spawn_factor': game.config.enemySpawnFactor,
+        'difficulty': game.config.difficulty.name
+    })
+
+    var highScoreBlock = document.getElementById('highScore');
+    var valBlock = highScoreBlock.querySelector(".value");
+
+    if (timeStrToNum(game.timer.object.innerHTML) > timeStrToNum(valBlock.innerHTML)) {
+        valBlock.innerHTML = game.timer.object.innerHTML
+    }
 
     game.timer.stop();
     game.player.obj.style.visibility = "hidden";
@@ -117,20 +150,18 @@ const handleDeath = (game) => {
     setTimeout(() => {
         document.getElementById("game").remove();
 
-        var startButton = document.getElementById("startGame");
+        var startButton = document.getElementById("gameOptions");
         startButton.style.visibility = "visible";
     }, 3000);
+
+    return
 }
 
 const update = (game) => {
     var livingSprites = [];
 
-    game.stats.update(game.config)
-    game.config.update()
-
     if (!gameRunning) {
         handleDeath(game)
-        console.log("User resized...")
         return
     }
 
@@ -156,16 +187,22 @@ const update = (game) => {
         }
     }
 
+    game.stats.update(game.config)
+    game.config.update()
     game.sprites = livingSprites;
     setTimeout(() => {update(game)}, game.config.tickSpeed);
 }
 
-function placeStartButton() {
-    var startButton = document.getElementById("startGame");
-    startButton.style.top = pageDimensions.height / 2;
-    startButton.style.left = pageDimensions.width / 2;
-    startButton.style.visibility = "visible";
+const highestScores = JSON.parse(document.getElementById('highestScores').textContent);
+const difficulties = JSON.parse(document.getElementById('difficulties').textContent);
 
+function placeStartButton() {
+    var gameOptions = document.getElementById("gameOptions");
+    gameOptions.style.top = pageDimensions.height / 2;
+    gameOptions.style.left = pageDimensions.width / 2;
+    gameOptions.style.visibility = "visible";
+
+    var startButton = document.getElementById('startButton');
     startButton.onclick = () => {
         playSong()
         runGame(pageDimensions)
@@ -193,6 +230,8 @@ var gameRunning = false;
 var songPlaying = false;
 
 placeStartButton();
+
+console.log(difficulties)
 
 var username = prompt("What is your username?");
 if (!username) {

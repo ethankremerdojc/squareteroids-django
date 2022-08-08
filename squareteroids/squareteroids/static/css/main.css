@@ -11,16 +11,24 @@ body {
     left: 0;
 }
 
-#startGame {
+#gameOptions {
     position: absolute;
-    z-index: 3;
     transform: translate(-50%, -50%); 
+}
+
+#startButton, #difficulty {
+    z-index: 3;
     background: none;
-    font-size: 40px;
+    font-size: 30px;
     padding: 20px;
     color: white;
     border: solid white 5px;
     border-radius: 40px;
+    margin: 20px;
+}
+
+#difficulty option {
+    color: black;
 }
 
 #stopwatch {

@@ -7,7 +7,13 @@ class Stats {
         this.obj = document.getElementById("stats");
     }
 
-    update(config) {
+    updateHighscore(newHighscore) {
+        var highScoreBlock = document.getElementById('highScore');
+        var highScoreValue = highScoreBlock.querySelector(".value");
+        highScoreValue.innerHTML = `${newHighscore.username} : ${newHighscore.time}`
+    }
+
+    update(config, newHighscore=null) {
         var speedBlock = document.getElementById('enemySpeed');
         var spawnFactorBlock = document.getElementById('spawnFactor');
 

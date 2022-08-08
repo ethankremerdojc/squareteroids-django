@@ -4,17 +4,33 @@
             var csrftoken = "{% csrf_token %}";
         </script>
 
+        {{ difficulties|json_script:"difficulties" }}
+        {{ highest_scores|json_script:"highestScores" }}
+        
         <link href="/static/css/main.css" rel="stylesheet">
         <script defer src="/static/js/index.js" type="module"></script>
         <title>Square-teroids</title>
     </head>
     <body>
-        <button id="startGame" style="visibility: hidden">Start Game</button>
+        
+        <div id="gameOptions"  style="visibility: hidden">
+            <button id="startButton">Start Game</button>
+            <select id="difficulty">
+                {% for diff in difficulties %}
+                    {% with name=diff.name %}
+                        {{name}}
+                        <option value="{{ name }}">{{ name }}</option>
+                    {% endwith %}
+                {% endfor %}
+            </select>
+        </div>
+
         <div id="stopwatch"></div>
         <div id="stats">
             <div id="highScore">
                 <span class="info">Highest Score:</span>
-                <span class="value">{{ highest_score.username }} : {{ highest_score.time }}</span>
+                <span class="username"></span>
+                <span class="value"></span>
             </div>
             <div id="enemySpeed">
                 <span class="info">Enemy Speed:</span>
