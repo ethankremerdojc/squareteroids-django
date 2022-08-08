@@ -54,8 +54,6 @@ function runGame(pageDimensions) {
     const game = new Game();
     game.obj = game.getDocObject();
     document.body.append(game.obj);
-
-    const selectedDifficulty = document.getElementById("difficulty").value;
     
     const config = new Config(difficulties, selectedDifficulty);
     game.config = config;
@@ -141,8 +139,11 @@ const handleDeath = (game) => {
     var valBlock = highScoreBlock.querySelector(".value");
 
     if (timeStrToNum(game.timer.object.innerHTML) > timeStrToNum(valBlock.innerHTML)) {
-        valBlock.innerHTML = game.timer.object.innerHTML
+        highestScores[selectedDifficulty].time = game.timer.object.innerHTML;
+        highestScores[selectedDifficulty].username = username;
     }
+
+    console.log("updated scores", highestScores[selectedDifficulty])
 
     game.timer.stop();
     game.player.obj.style.visibility = "hidden";
@@ -193,7 +194,7 @@ const update = (game) => {
     setTimeout(() => {update(game)}, game.config.tickSpeed);
 }
 
-const highestScores = JSON.parse(document.getElementById('highestScores').textContent);
+var highestScores = JSON.parse(document.getElementById('highestScores').textContent);
 const difficulties = JSON.parse(document.getElementById('difficulties').textContent);
 
 function placeStartButton() {
@@ -224,7 +225,7 @@ window.onresize = () => {
     gameRunning = false;
 }
 const csrftoken = utils.getCookie('csrftoken');
-
+const selectedDifficulty = document.getElementById("difficulty").value;
 var pageDimensions = utils.getPageDimensions();
 var gameRunning = false;
 var songPlaying = false;
