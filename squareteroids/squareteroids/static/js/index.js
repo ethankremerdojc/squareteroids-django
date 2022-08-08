@@ -54,7 +54,9 @@ function runGame(pageDimensions) {
     const game = new Game();
     game.obj = game.getDocObject();
     document.body.append(game.obj);
-    
+
+    var selectedDifficulty = document.getElementById("difficulty").value;
+
     const config = new Config(difficulties, selectedDifficulty);
     game.config = config;
     
@@ -225,7 +227,6 @@ window.onresize = () => {
     gameRunning = false;
 }
 const csrftoken = utils.getCookie('csrftoken');
-const selectedDifficulty = document.getElementById("difficulty").value;
 var pageDimensions = utils.getPageDimensions();
 var gameRunning = false;
 var songPlaying = false;
@@ -233,6 +234,7 @@ var songPlaying = false;
 placeStartButton();
 
 console.log(difficulties)
+console.log(highestScores)
 
 var username = prompt("What is your username?");
 if (!username) {
