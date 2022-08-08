@@ -55,7 +55,8 @@ function runGame(pageDimensions) {
     game.obj = game.getDocObject();
     document.body.append(game.obj);
 
-    const selectedDifficulty = document.getElementById("difficulty").value;
+    var selectedDifficulty = document.getElementById("difficulty").value;
+
     
     const config = new Config(difficulties, selectedDifficulty);
     game.config = config;
@@ -96,7 +97,7 @@ function runGame(pageDimensions) {
     highScoreValueBlock.innerHTML = highestScores[selectedDifficulty].time;
 
     var highScoreUsernameBlock = highScoreBlock.querySelector(".username");
-    highScoreUsernameBlock.innerHTML = game.player.username;
+    highScoreUsernameBlock.innerHTML = highestScores[selectedDifficulty].username;
 
     gameRunning = true;
     update(game)
@@ -124,6 +125,8 @@ const timeStrToNum = (timeStr) => {
 
 const handleDeath = (game) => {
 
+    var selectedDifficulty = document.getElementById("difficulty").value;
+
     console.log("Player died...")
         
     var deathSound = new Audio("static/sounds/dead.mp3")
@@ -141,8 +144,11 @@ const handleDeath = (game) => {
     var valBlock = highScoreBlock.querySelector(".value");
 
     if (timeStrToNum(game.timer.object.innerHTML) > timeStrToNum(valBlock.innerHTML)) {
-        valBlock.innerHTML = game.timer.object.innerHTML
+        highestScores[selectedDifficulty].time = game.timer.object.innerHTML;
+        highestScores[selectedDifficulty].username = username;
     }
+
+    console.log("updated scores", highestScores[selectedDifficulty])
 
     game.timer.stop();
     game.player.obj.style.visibility = "hidden";
@@ -193,7 +199,7 @@ const update = (game) => {
     setTimeout(() => {update(game)}, game.config.tickSpeed);
 }
 
-const highestScores = JSON.parse(document.getElementById('highestScores').textContent);
+var highestScores = JSON.parse(document.getElementById('highestScores').textContent);
 const difficulties = JSON.parse(document.getElementById('difficulties').textContent);
 
 function placeStartButton() {
@@ -224,7 +230,6 @@ window.onresize = () => {
     gameRunning = false;
 }
 const csrftoken = utils.getCookie('csrftoken');
-
 var pageDimensions = utils.getPageDimensions();
 var gameRunning = false;
 var songPlaying = false;
@@ -232,6 +237,7 @@ var songPlaying = false;
 placeStartButton();
 
 console.log(difficulties)
+console.log(highestScores)
 
 var username = prompt("What is your username?");
 if (!username) {
