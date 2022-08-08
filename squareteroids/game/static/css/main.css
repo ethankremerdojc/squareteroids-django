@@ -43,11 +43,14 @@ body {
 #stats {
     position: absolute;
     bottom: 0px;
-    width: calc(100vw - 64px);
-    left: 60px;
+    right: 0;
     text-align: right;
     font-size: 20px;
     color: white;
+    border: solid white;
+    padding: 16px;
+    border-radius: 16px;
+    background-color: #333a5c;
 }
 
 /* PLAYER */

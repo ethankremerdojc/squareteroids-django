@@ -23,6 +23,11 @@ class Player {
             this.obj.style.top = event.clientY;
             this.obj.style.left = event.clientX;
         });
+
+        document.addEventListener('touchmove', (event) => {
+            this.obj.style.top = event.clientY;
+            this.obj.style.left = event.clientX;
+        });
     }
 }
 
