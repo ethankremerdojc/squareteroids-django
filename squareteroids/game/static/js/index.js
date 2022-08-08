@@ -123,7 +123,6 @@ const timeStrToNum = (timeStr) => {
 }
 
 const handleDeath = (game) => {
-
     console.log("Player died...")
         
     var deathSound = new Audio("static/sounds/dead.mp3")
