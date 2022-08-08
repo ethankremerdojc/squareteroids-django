@@ -32,7 +32,7 @@ def squareteroids(request, *args, **kwargs):
         highest_scores[d.name] = highest_score
 
     context['highest_scores'] = highest_scores
-    context['difficulties'] = [ dif.to_dict() for dif in Difficulty.objects.all()]
+    context['difficulties'] = [ dif.to_dict() for dif in Difficulty.objects.all().order_by('starting_enemy_speed')]
 
     return render(request, template_name, context)
 
