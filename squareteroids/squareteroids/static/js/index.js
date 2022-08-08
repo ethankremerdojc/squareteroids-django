@@ -90,29 +90,31 @@ function runGame(pageDimensions) {
     startButton.style.visibility = "hidden";
     
     // score block
+    setHighestScores(highestScores, selectedDifficulty)
+
+    gameRunning = true;
+    update(game)
+}
+
+const setHighestScores = (highestScores, selectedDifficulty) => {
     var highScoreBlock = document.getElementById('highScore');
+
+    var difficultyBlock = highScoreBlock.querySelector('.difficultyName');
+    difficultyBlock.innerHTML = selectedDifficulty;
 
     var highScoreValueBlock = highScoreBlock.querySelector(".value");
     highScoreValueBlock.innerHTML = highestScores[selectedDifficulty].time;
 
     var highScoreUsernameBlock = highScoreBlock.querySelector(".username");
     highScoreUsernameBlock.innerHTML = highestScores[selectedDifficulty].username;
-
-    gameRunning = true;
-    update(game)
 }
 
 const sendPostData = (data) => {
-
-    console.log("Posting Data: ", data)
-
     fetch("/post", {
         method: "POST",
         headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrftoken}, 
         body: JSON.stringify(data)
-    }).then(res => {
-    console.log("Request complete! response:", res);
-    });
+    })
 }
 
 const timeStrToNum = (timeStr) => {
@@ -146,7 +148,7 @@ const handleDeath = (game) => {
         highestScores[selectedDifficulty].username = username;
     }
 
-    console.log("updated scores", highestScores[selectedDifficulty])
+    setHighestScores(highestScores, selectedDifficulty)
 
     game.timer.stop();
     game.player.obj.style.visibility = "hidden";
@@ -156,7 +158,7 @@ const handleDeath = (game) => {
 
         var startButton = document.getElementById("gameOptions");
         startButton.style.visibility = "visible";
-    }, 3000);
+    }, 1500);
 
     return
 }
@@ -175,9 +177,12 @@ const update = (game) => {
         game.placeObject(e.obj);
     }
 
+    var newShadow = game.player.getShadow();
+
+    game.placeObject(newShadow.obj)
+
     for (var i = 0; i < game.sprites.length; i++) {
         var sprite = game.sprites[i];
-        sprite.move();
 
         if (!sprite.isOutOfBounds(pageDimensions)) {
             livingSprites.push(sprite)
@@ -185,6 +190,7 @@ const update = (game) => {
             sprite.obj.remove()
         }
 
+        sprite.move();
         if (sprite.collidesWith(game.player)) {
             handleDeath(game)
             return
@@ -194,6 +200,8 @@ const update = (game) => {
     game.stats.update(game.config)
     game.config.update()
     game.sprites = livingSprites;
+
+
     setTimeout(() => {update(game)}, game.config.tickSpeed);
 }
 

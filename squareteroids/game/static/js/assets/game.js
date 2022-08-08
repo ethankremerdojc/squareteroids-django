@@ -16,8 +16,7 @@ class Game {
 
     placeObjects() {
         for (var sprite of this.sprites) {
-            var spriteObj = sprite.obj;
-            this.obj.append(spriteObj);
+            this.placeObject(sprite.obj);
         }
     }
 }

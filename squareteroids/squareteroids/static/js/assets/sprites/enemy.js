@@ -6,6 +6,7 @@ class Enemy {
         this.size = size;
         this.bgColor = bgColor;
         this.rotationTime = utils.randWholeNum(10) + 4;
+        this.type = "enemy";
     }
 
     getX() {

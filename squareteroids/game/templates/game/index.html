@@ -4,6 +4,10 @@
             var csrftoken = "{% csrf_token %}";
         </script>
 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+        
         {{ difficulties|json_script:"difficulties" }}
         {{ highest_scores|json_script:"highestScores" }}
         
@@ -23,12 +27,24 @@
                     {% endwith %}
                 {% endfor %}
             </select>
+
+            <div class="how-to-play">
+                <h1>Squareteroids</h1>
+                <p>
+                    Use your mouse to move the square and avoid the aster... I mean
+                    squareteroids. Get to the highest time to get the high score!
+
+                    Increases in difficulty increase the speed of enemies as well as 
+                    their spawn rate.
+                </p>
+            </div>
         </div>
 
         <div id="stopwatch"></div>
         <div id="stats">
             <div id="highScore">
-                <span class="info">Highest Score:</span>
+                <div class="difficultyName"></div>
+                <span class="info">High Score: </span>
                 <span class="username"></span>
                 <span class="value"></span>
             </div>

@@ -1,5 +1,6 @@
 body {
     background-color: #20253c;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
 #game  {
@@ -13,7 +14,7 @@ body {
 
 #gameOptions {
     position: absolute;
-    transform: translate(-50%, -50%); 
+    transform: translate(-50%, -50%);
 }
 
 #startButton, #difficulty {
@@ -37,20 +38,36 @@ body {
     width: calc(100vw - 8px);
     text-align: center;
     font-size: 50px;
-    color: white;
+    color: #2e6fe7;
 }
 
 #stats {
     position: absolute;
-    bottom: 0px;
-    right: 0;
+    bottom: 12px;
+    right: 12px;
     text-align: right;
     font-size: 20px;
     color: white;
     border: solid white;
-    padding: 16px;
     border-radius: 16px;
-    background-color: #333a5c;
+    padding: 16px;
+    background-color: #2d365e;
+}
+
+.how-to-play {
+    max-width: 460px;
+}
+
+.how-to-play h1 {
+    color: white;
+    font-size: 50px;
+    text-align: center;
+}
+
+.how-to-play p {
+    color: white;
+    font-size: 20px;
+    text-align: center;
 }
 
 /* PLAYER */
@@ -65,6 +82,18 @@ body {
     background-color: white;
     position: absolute;
     transform: translate(-50%, -50%); 
+}
+
+#highScore .username, #highScore .value {
+    font-weight: bold;
+    margin-left: 3px;
+}
+
+.difficultyName {
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
 }
 
 @keyframes rotateLeft {
@@ -82,5 +111,14 @@ body {
     }
     to {
         transform: rotate(0deg);
+    }
+}
+
+@keyframes fadeAway {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
     }
 }
