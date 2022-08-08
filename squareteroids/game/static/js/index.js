@@ -96,7 +96,7 @@ function runGame(pageDimensions) {
     highScoreValueBlock.innerHTML = highestScores[selectedDifficulty].time;
 
     var highScoreUsernameBlock = highScoreBlock.querySelector(".username");
-    highScoreUsernameBlock.innerHTML = highestScores[selectedDifficulty].username;
+    highScoreUsernameBlock.innerHTML = game.player.username;
 
     gameRunning = true;
     update(game)
