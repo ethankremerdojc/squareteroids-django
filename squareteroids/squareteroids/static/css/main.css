@@ -84,9 +84,9 @@ body {
     transform: translate(-50%, -50%); 
 }
 
-.highScore .username, .highScore .value {
+#highScore .username, #highScore .value {
     font-weight: bold;
-    margin-left: 6px;
+    margin-left: 3px;
 }
 
 .difficultyName {
