@@ -1,7 +1,5 @@
 # Squareteroids
 
-CURRENTLY HOSTED AT : https://ethankremer.com
-
 ![image](https://user-images.githubusercontent.com/64492390/183656021-c93adb05-c0df-4287-9db3-d1570a33ba94.png)
 
 Asteroids based game where squares spawn at random points on the edge of the screen and fly across.
